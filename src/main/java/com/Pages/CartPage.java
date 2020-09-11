@@ -1,65 +1,36 @@
 package com.Pages;
 
 
-import org.openqa.selenium.support.PageFactory;
-import org.testng.Assert;
-import org.testng.Reporter;
-
-import io.appium.java_client.MobileElement;
-import io.appium.java_client.android.AndroidDriver;
-import io.appium.java_client.android.AndroidElement;
-import io.appium.java_client.pagefactory.AndroidFindBy;
-import io.appium.java_client.pagefactory.AppiumFieldDecorator;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import com.Main.Base;
 
 
-public class CartPage {
+public class CartPage extends Base {
+		
+	@FindBy(id =  "com.amazon.mShop.android.shopping:id/action_bar_cart_image")
+	public static WebElement CartMenu;
 	
-	public CartPage(AndroidDriver<AndroidElement> driver) {
-		PageFactory.initElements(new AppiumFieldDecorator(driver), this);
-	}
-
-	@AndroidFindBy(xpath = "//android.widget.Button[@text='Proceed to Buy']")
-	private MobileElement cartPageHeader;
+	@FindBy(xpath ="//android.widget.Button[@text='Proceed to Buy']")
+	public static WebElement ProceedToBuy;
 	
-	@AndroidFindBy(className = "android.view.View[3]")
-	private MobileElement productsPrice;
+	@FindBy(xpath ="//android.view.View[contains(@text,'Subtotal')]")
+	public static WebElement SubTotal;
 	
-	@AndroidFindBy(className = "android.view.View[1]")
-	private MobileElement ProdcutsDescription;
+	@FindBy(id ="com.amazon.mShop.android.shopping:id/iss_search_dropdown_item_clear")
+	public static WebElement ClearSearch;
+	
+	@FindBy(xpath ="//android.view.View[@text='Add a mobile phone number']")
+	public static WebElement AddMobileNumber;
+	
+	@FindBy(xpath ="//android.widget.EditText[@index='1']")
+	public static WebElement MobileNumberField;
+	
+	@FindBy(xpath ="//*[@text='Continue']")
+	public static WebElement ContinueMoble;
+	
+	@FindBy(id ="android.view.View[@text='Enter a shipping address']")
+	public static WebElement EnterShippingAddress;
 
-	public MobileElement getCartPageHeader() {
-		return cartPageHeader;
-	}
-
-	public MobileElement getProductsPrice() {
-		return productsPrice;
-	}
-
-	public MobileElement getProdcutsDescription() {
-		return ProdcutsDescription;
-	}
-
-	/**
-	 * @author Manjunath.Karoshi
-	 * @description: This method is for checking whether Cart Page is displaying or not
-	 * @date : 04/09/2020
-	 */
-	public void verifyCartPageIsDisplaying() {
-		getCartPageHeader().isDisplayed();
-		Reporter.log("Cart Page is Displayed");
-	}
-
-	/**
-	 * @author Manjunath.Karoshi
-	 * @description: This method is for verifying the product details on the Cart page
-	 * @date : 04/09/2020
-	 */
-	public void verifyTheproductDetail() {
-		int TVPriceCart = Integer.parseInt(getProductsPrice().getText());
-		String TVDescCart = getProdcutsDescription().getText();
-		Assert.assertEquals(TVPriceCart, HomePage.TvPrice);
-		Assert.assertEquals(TVDescCart, HomePage.TvDescription);
-		Reporter.log("Product details are verified in the cart page");
-	}
 
 }

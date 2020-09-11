@@ -1,56 +1,185 @@
 package com.StepDefinition;
 
-import java.util.List;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.testng.Assert;
 
+import com.CommonFunctions.AppiumUtility;
 import com.Main.Base;
+import com.Pages.CartPage;
 import com.Pages.HomePage;
-import com.Pages.LoginPage;
-
+import com.Pages.ProductPage;
 import cucumber.api.java.en.Then;
-import cucumber.api.java.en.When;
-import io.appium.java_client.android.AndroidElement;
 
 public class HomePageDefinition extends Base {
 
-	HomePage homePage;
-	LoginPage loginpage;
+	AppiumUtility ap = new AppiumUtility();
+	public static String ProductName = null;
 
-	@When("^User clicks on Sign-In Button$")
-	public void userClicksOnSignInButton() {
-		homePage = new HomePage(driver);
-		homePage.clickOnSignInBtn();    
+	/**
+	 * @author Manjunath.Karoshi
+	 * @Description : validate the Amazon logo
+	 * @date : 11/09/2020
+	 */
+	@Then("^Validate text Amazon Logo is displayed$")
+	public void validate_text_Amazon_Logo_is_displayed() throws Throwable {
+		wait.until(ExpectedConditions.elementToBeClickable(HomePage.AmazonLogo));
+		Assert.assertTrue(HomePage.AmazonLogo.isDisplayed());
 	}
 
-	@When("^User logged in using username, password and click signIn Button$")
-	public void userLoggedInUsingUsernamePasswordAndClickSignInButton() {
-		loginpage = new LoginPage(driver);
-		loginpage.enterUserName(prop.getProperty("username"));
-		loginpage.clickOnContinue();
-		loginpage.enterpassword(prop.getProperty("password"));
-		loginpage.clickOnSignIn();
+	/**
+	 * @author Manjunath.Karoshi
+	 * @Description : Click on Amazon button
+	 * @date : 11/09/2020
+	 */
+	@Then("^User clicks on Amazon button$")
+	public void user_clicks_on_Amazon_button() throws Throwable {
+		wait.until(ExpectedConditions.elementToBeClickable(HomePage.AmazonLogo));
+		HomePage.AmazonLogo.click();
+		wait.until(ExpectedConditions.elementToBeClickable(HomePage.AmazonLogo));
+
 	}
 
-	@Then("^User should see that home page is displayed$")
-	public void userShouldSeeThatHomePageIsDisplayed() {
-		homePage = new HomePage(driver);
-		homePage.verifyHomeIsDisplayed();
-	}
-	@When("^User searches for '(\\d+)-inch TV'$")
-	public void user_searches_for_inch_TV(String tvDetail)  {
-		homePage = new HomePage(driver);
-		homePage.enterSearchDetail(tvDetail);
+	/**
+	 * @author Manjunath.Karoshi
+	 * @Description : Validate the search bar
+	 * @date : 11/09/2020
+	 */
+	@Then("^Validate Search Bar is displayed$")
+	public void validate_Search_Bar_is_displayed() throws Throwable {
+		wait.until(ExpectedConditions.elementToBeClickable(HomePage.HomeSearch));
+		Assert.assertTrue(HomePage.HomeSearch.isDisplayed());
+
 	}
 
-	@When("^User click on one of the TV's displays except first and Last$")
-	public void userClickOnOneOfTheTVDisplayesExceptFirstAndLast() {
-		homePage = new HomePage(driver);
-		homePage.selectSecondTvFromSearchResults();
+	@SuppressWarnings("static-access")
+	@Then("^Verify the Suggestion on the Home Page$")
+	public void verify_the_Suggestion_on_the_Home_Page() throws Throwable {
+		ap.swipeHorizontal(driver);
 	}
 
-	@When("^User Add the Product to cart$")
-	public void userAddTheProductToCart() {
-		homePage = new HomePage(driver);
-		homePage.clickOnAddToCardButton();
+	/**
+	 * @author Manjunath.Karoshi
+	 * @Description : Choose the current location
+	 * @date : 11/09/2020
+	 */
+	@Then("^Choose the current location$")
+	public void choose_the_current_location() throws Throwable {
+
+		wait.until(ExpectedConditions.elementToBeClickable(HomePage.AmazonLogo));
+		HomePage.AmazonLogo.click();
+		wait.until(ExpectedConditions.elementToBeClickable(HomePage.Devliver));
+		HomePage.Devliver.click();
+		wait.until(ExpectedConditions.elementToBeClickable(HomePage.useCurrentLocation));
+		HomePage.useCurrentLocation.click();
+		wait.until(ExpectedConditions.elementToBeClickable(HomePage.AllowPermission));
+		HomePage.AllowPermission.click();
+
+	}
+
+	/**
+	 * @author Manjunath.Karoshi
+	 * @Description : Search for the product
+	 * @date : 11/09/2020
+	 */
+	@Then("^Search for the product \"([^\"]*)\"$")
+	public void search_for_the_product_inch_TV(String Product) throws Throwable {
+
+		if (Product.equals("65-inch TV")) {
+
+			wait.until(ExpectedConditions.elementToBeClickable(HomePage.HomeSearch));
+			Assert.assertTrue(HomePage.HomeSearch.isDisplayed());
+			HomePage.HomeSearch.click();
+			try {
+				CartPage.ClearSearch.click();
+			} catch (Exception E) {
+
+				System.out.println("Searching for the First Time");
+			}
+			HomePage.HomeSearch.sendKeys("65-inch");
+			wait.until(ExpectedConditions.elementToBeClickable(HomePage.SearchDropDown));
+			HomePage.SearchDropDown.click();
+			wait.until(ExpectedConditions.elementToBeClickable(HomePage.ResultsCount));
+
+		}
+
+	}
+
+	/**
+	 * @author Manjunath.Karoshi
+	 * @Description : Validate 65 inch tv is displayed or not
+	 * @date : 11/09/2020
+	 */
+	@Then("^Validate \"([^\"]*)\" is displayed$")
+	public void validate_options_menu(String Product) {
+		if (Product.equals("65-inch TV")) {
+			wait.until(ExpectedConditions.elementToBeClickable(HomePage.ResultsCount));
+			Assert.assertTrue(HomePage.ResultsCount.isDisplayed());
+		}
+	}
+
+	/**
+	 * @author Manjunath.Karoshi
+	 * @Description : Selects the product from the list
+	 * @date : 10/09/2020
+	 */
+	@Then("^User selects the product from the list$")
+	public void user_selects_the_product_from_the_list() throws Throwable {
+
+		ap.scrollToText("Samsung", driver);
+		wait.until(ExpectedConditions.elementToBeClickable(ProductPage.RandomResult));
+		Assert.assertTrue(ProductPage.RandomResult.isDisplayed());
+		wait.until(ExpectedConditions.elementToBeClickable(ProductPage.Inches));
+		Assert.assertTrue(ProductPage.Inches.isDisplayed());
+	}
+
+	@Then("^Verify product details are displayed$")
+	public void verify_product_details_are_displayed() throws Throwable {
+
+		wait.until(ExpectedConditions.elementToBeClickable(ProductPage.ProdcutName));
+		ProductName = ProductPage.ProdcutName.getText();
+		Assert.assertTrue(ProductName.contains("TV"), "The suggestions are not having expected Product");
+
+	}
+
+	/**
+	 * @author Manjunath.Karoshi
+	 * @Description : Verify the details
+	 * @date : 10/09/2020
+	 */
+	@Then("^User Verifies the details of the selected Product$")
+	public void user_Verifies_the_details_of_the_selected_Product() throws Throwable {
+
+		String ProductDetailsPage = ProductPage.ProdcutName.getText();
+		System.out.println(ProductDetailsPage);
+		// Assert.assertEquals(ProductDetailsPage, ProductName);
+		String ProductPrice = ProductPage.Price.getText();
+		System.out.println("The Price of the Choosen Prodcut is: " + ProductPrice);
+
+	}
+
+	/**
+	 * @author Manjunath.Karoshi
+	 * @Description : Add the product to cart
+	 * @date : 10/09/2020
+	 */
+	@Then("^User Add's the product to the Cart$")
+	public void user_Add_s_the_product_to_the_Cart() throws Throwable {
+		Thread.sleep(5000);
+		ap.scrollToText("Add to Cart", driver);
+		// wait.until(ExpectedConditions.elementToBeClickable(ProductPage.AddedToCart));
+		// Assert.assertTrue(ProductPage.AddedToCart.isDisplayed());
+
+	}
+
+	/**
+	 * @author Manjunath.Karoshi
+	 * @Description : Close the app
+	 * @date : 10/09/2020
+	 */
+	@Then("^User closes the app$")
+	public void user_closes_the_app() throws Throwable {
+
+		driver.closeApp();
 	}
 
 }

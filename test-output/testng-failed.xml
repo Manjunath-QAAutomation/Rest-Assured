@@ -6,8 +6,10 @@
       <class name="com.TestRunner.RunningTest">
         <methods>
           <include name="setUpClass"/>
+          <include name="writeExtentReport"/>
           <include name="feature" invocation-numbers="0"/>
           <include name="tearDownClass"/>
+          <include name="setup"/>
         </methods>
       </class> <!-- com.TestRunner.RunningTest -->
     </classes>

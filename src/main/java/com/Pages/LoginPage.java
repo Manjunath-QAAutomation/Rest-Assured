@@ -1,116 +1,53 @@
 package com.Pages;
 
-
-import java.util.List;
-
-import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.testng.Reporter;
-
 import com.Main.Base;
 
-import io.appium.java_client.MobileElement;
-import io.appium.java_client.android.AndroidDriver;
-import io.appium.java_client.android.AndroidElement;
-import io.appium.java_client.pagefactory.AndroidFindBy;
-import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 
-public class LoginPage {
-
-	public LoginPage(AndroidDriver<AndroidElement> driver) {
-		PageFactory.initElements(new AppiumFieldDecorator(driver), this);
-	}
-
-	@AndroidFindBy(id = "android.widget.EditText:id/ap_email_login")
-	private MobileElement usernameField;
-	
-	@AndroidFindBy(id = "android.widget.Button:id/continue")
-	private MobileElement contiueButton;
-
-	@AndroidFindBy(id = "android.widget.EditText:id/ap_password")
-	private MobileElement passwordField;
+public class LoginPage extends Base{
 
 	
-	@AndroidFindBy(id = "android.widget.Button:id/signInSubmit")
-	private MobileElement loginButton;
+	@FindBy(xpath = "//android.widget.EditText[@index='1']")
+	public static WebElement usernameField;
+		
+	@FindBy(xpath = "//android.widget.Button[@text='Continue']")
+	public static WebElement contiueButton;
+
+	@FindBy(xpath = "//android.widget.EditText[@text='Amazon password']")
+	public static WebElement passwordField;
+
+	@FindBy(xpath = "//android.widget.Button[@text='Login']")
+	public static WebElement loginButton;
 
 
-	@AndroidFindBy(xpath = "")
-	private MobileElement error_Msg;
-
-	public MobileElement getusernameField() {
+	public static WebElement getusernameField() {
 		return usernameField;
 	}
 
 
-	public MobileElement getucontiueButton() {
+	public static WebElement getucontiueButton() {
 		return contiueButton;
 	}
 
-	public MobileElement getpasswordField() {
+	public static WebElement getpasswordField() {
 		return passwordField;
 	}
 
-	public MobileElement getSubmit_btn() {
+	public static WebElement getSubmit_btn() {
 		return loginButton;
 	}
 
-	public MobileElement getError_Msg() {
-		return error_Msg;
-	}
-
-	/**
-	 * @author Manjunath.Karoshi
-	 * @Description : This method is to verify whether the username text box is present
-	 *      or not and then enter the username
-	 * @param username used to enter in the username text box
-	 * @date : 03/09/2020
-	 */
-	public void enterUserName(String uname) {
-		try{
-		getusernameField().isDisplayed();			
-		getusernameField().sendKeys(uname);
-		Reporter.log("Username is Entered", true);
-		
-	} catch (Exception e) {
-		e.printStackTrace();
-	}
-	}
 
 	/**
 	 * @author Manjunath.Karoshi
 	 * @Description : This method is for clicking on the signIn Button
 	 * @date : 04/09/2019
 	 */
-	public void clickOnContinue() {
+	public static void clickOnContinue() {
 		getucontiueButton().click();
 		Reporter.log("Click on Continue button", true);
 	}
 	
-	/**
-	 * @author Manjunath.Karoshi
-	 * @Description : This method is to verify whether the password text box is present
-	 *      or not and then enter the password
-	 * @param password used to enter in the password text box
-	 * @date : 03/09/2019
-	 */
-	public void enterpassword(String pwd) {
-		try {
-			getpasswordField().isDisplayed();
-			getpasswordField().sendKeys(pwd);
-			Reporter.log("Password is Entered", true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	/**
-	 * @author Manjunath.Karoshi
-	 * @Description : This method is for clicking on the signIn Button
-	 * @date : 03/09/2019
-	 */
-	public void clickOnSignIn() {
-		getSubmit_btn().click();
-		Reporter.log("Click on SignIn button", true);
-	}
-
 }

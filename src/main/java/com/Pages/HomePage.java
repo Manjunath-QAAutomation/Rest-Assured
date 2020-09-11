@@ -2,161 +2,84 @@ package com.Pages;
 
 import java.util.List;
 
-import org.openqa.selenium.support.PageFactory;
-import org.testng.Reporter;
-import io.appium.java_client.MobileElement;
-import io.appium.java_client.android.AndroidDriver;
-import io.appium.java_client.android.AndroidElement;
-import io.appium.java_client.pagefactory.AndroidFindBy;
-import io.appium.java_client.pagefactory.AppiumFieldDecorator;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import com.Main.Base;
+
+public class HomePage extends Base {
 
 
-public class HomePage {
+	@FindBy(id ="com.amazon.mShop.android.shopping:id/gno_greeting_text_view")
+	public static WebElement signInButton;
 
-	public static int TvPrice;
-	public static String TvDescription;
+	@FindBy(id ="com.amazon.mShop.android.shopping:id/action_bar_home_logo")
+	public static WebElement AmazonLogo;
+	
+	@FindBy(id = "com.amazon.mShop.android.shopping:id/rs_search_src_text")
+	public static WebElement HomeSearch;
+	
+	@FindBy(id ="com.amazon.mShop.android.shopping:id/iss_search_dropdown_item_text")
+	public static WebElement SearchDropDown;
+	
+	@FindBy(xpath = "//android.widget.TextView[contains(@text,'Results')]")
+	public static WebElement ResultsCount;
+	
+	@FindBy(xpath = "android.widget.EditText:id/in.amazon.mShop.android.shopping:id/rs_search_src_text")
+	public static WebElement searchBox;
+	
+	@FindBy(xpath = "//android.widget.TextView[contains(@text,'Deliver')]")
+	public static WebElement Devliver;
+	
+	@FindBy(id = "com.amazon.mShop.android.shopping:id/loc_ux_update_current_pin_code")
+	public static WebElement useCurrentLocation;
+	
+	@FindBy(xpath = "//*[@text='Sign in for the best experience']")
+	public static WebElement SigninForBestExperience;
+	
+	@FindBy(id =  "com.android.packageinstaller:id/permission_allow_button")
+	public static WebElement AllowPermission;
+	
+	@FindBy(xpath = "//android.widget.LinearLayout[@resource-id='in.amazon.mShop.android.shopping:id/iss_search_dropdown_item_suggestions']")
+	public static List<WebElement> searchBoxResults;
+	
+	@FindBy(id = "//android.widget.TextView:id/in.amazon.mShop.android.shopping:id/item_title")
+	public static WebElement saveSearchPopUp;
+	
+	@FindBy(xpath = "//android.widget.TextView:id/in.amazon.mShop.android.shopping:id/item_title")
+	public static List<WebElement> tvResultsNameDescription;
+	
+	@FindBy(xpath = "//android.widget.TextView:id/in.amazon.mShop.android.shopping:id/item_price")
+	public static List<WebElement> tvResultPrices;
+	
+	@FindBy(xpath = "//android.widget.Button[@text=\"ADD TO CART\"]")
+	public static WebElement addTocartBtn;
 
-	public HomePage(AndroidDriver<AndroidElement> driver) {
-		PageFactory.initElements(new AppiumFieldDecorator(driver), this);
-	}
-
-	//@AndroidFindBy(id = "android.widget.Button:id/signInSubmit")
-	@AndroidFindBy(xpath = "//android.widget.Button[@text='Sign in']")
-	private MobileElement signInButton;
-	
-	@AndroidFindBy(xpath = "android.widget.EditText:id/in.amazon.mShop.android.shopping:id/rs_search_src_text")
-	private MobileElement searchBox;
-	
-	@AndroidFindBy(xpath = "//android.widget.LinearLayout[@resource-id='in.amazon.mShop.android.shopping:id/iss_search_dropdown_item_suggestions']")
-	private List<MobileElement> searchBoxResults;
-	
-	@AndroidFindBy(id = "//android.widget.TextView:id/in.amazon.mShop.android.shopping:id/item_title")
-	private MobileElement saveSearchPopUp;
-	
-	@AndroidFindBy(xpath = "//android.widget.TextView:id/in.amazon.mShop.android.shopping:id/item_title")
-	private List<MobileElement> tvResultsNameDescription;
-	
-	@AndroidFindBy(xpath = "//android.widget.TextView:id/in.amazon.mShop.android.shopping:id/item_price")
-	private List<MobileElement> tvResultPrices;
-	
-	@AndroidFindBy(xpath = "//android.widget.Button[@text=\"ADD TO CART\"]")
-	private MobileElement addTocartBtn;
-
-	public MobileElement getSignInButton() {
+	public static WebElement getSignInButton() {
 		return signInButton;
 	}
 
-	public MobileElement getSearchBox() {
+	public static WebElement getSearchBox() {
 		return searchBox;
 	}
 
-	public List<MobileElement> getSearchBoxResults() {
+	public static List<WebElement> getSearchBoxResults() {
 		return searchBoxResults;
 	}
 
-	public MobileElement getSaveSearchPopUp() {
+	public static WebElement getSaveSearchPopUp() {
 		return saveSearchPopUp;
 	}
 
-	public List<MobileElement> getTvResultsNameDescription() {
+	public static List<WebElement> getTvResultsNameDescription() {
 		return tvResultsNameDescription;
 	}
 
-	public List<MobileElement> getTvResultPrices() {
+	public static List<WebElement> getTvResultPrices() {
 		return tvResultPrices;
 	}
 
-	public MobileElement getAddTocartBtn() {
+	public static WebElement getAddTocartBtn() {
 		return addTocartBtn;
 	}
 
-	/**
-	 * @author Manjunath.Karoshi
-	 * @Description : This method is for checking the display of SignIn Button and
-	 *              then click on SignIn Button
-	 * @date : 03/09/2020
-	 */
-	public void clickOnSignInBtn() {
-		getSignInButton().isDisplayed();
-		getSignInButton().click();
-	}
-
-	/**
-	 * @author Manjunath.Karoshi
-	 * @Description : This method is used to verify search box is displaying
-	 * @date : 03/09/2020
-	 */
-	public void verifyHomeIsDisplayed() {
-		getSearchBox().isDisplayed();
-		Reporter.log("Search box is displayed");
-	}
-
-	/**
-	 * @author Manjunath.Karoshi
-	 * @Description : This method is for entering the search detail in the search box
-	 * @date : 03/09/2020
-	 */
-	public void enterSearchDetail(String searchDetail) {
-		getSearchBox().isDisplayed();
-		getSearchBox().sendKeys(searchDetail);
-		Reporter.log("Search details entered");
-	}
-
-	/**
-	 * @author Manjunath.Karoshi
-	 * @Description : This method is used to select the TV list details from the suggestions           
-	 * @date : 03/09/2020
-	 */
-	public void selectTVFromList() {
-		searchBoxResults.get(1).isDisplayed();
-		searchBoxResults.get(1).click();
-		Reporter.log("Clicked on 2nd Tv", true);
-	}
-
-	/**
-	 * @author Manjunath.Karoshi
-	 * @Description : This method is for verifying the pop-up presennt and
-	 *              then click on pop-up
-	 * @date : 03/09/2020
-	 */
-	public void clickOnSaVePopUp() {
-		getSaveSearchPopUp().isDisplayed();
-		getSaveSearchPopUp().click();
-		Reporter.log("Click on pop-up");
-	}
-
-	/**
-	 * @author Manjunath.Karoshi
-	 * @Description : This method is for selecting the 2nd TV from the results
-	 *              displayed click
-	 * @date : 03/09/2020
-	 */
-	public void selectSecondTvFromSearchResults() {
-		getSearchBoxResults().get(1).isDisplayed();
-		getSearchBoxResults().get(1).click();
-	}
-
-	/**
-	 * @author Manjunath.Karoshi
-	 * @Description : This method is used to store the Product details
-	 * @date : 03/09/2020
-	 */
-	public void getAllTheProductDetail() {
-		String prodDetails=getTvResultPrices().get(1).getText();
-		TvPrice = Integer.parseInt(prodDetails);
-		TvDescription = getTvResultsNameDescription().get(1).getText();
-		Reporter.log("Product Details:" + "Description : " + TvDescription + "\n and the Price is :"
-				+ TvPrice);
-	}
-
-	/**
-	 * @author Manjunath.Karoshi
-	 * @Description : This method is for adding the product to cart page
-	 * @date : 03/09/2020
-	 */
-	public void clickOnAddToCardButton() {
-		getAddTocartBtn().isDisplayed();
-		getAddTocartBtn().click();
-		Reporter.log("Product is added to the cart");
-	}
 }

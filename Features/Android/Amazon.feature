@@ -1,27 +1,31 @@
-#@TVPurchase_Amazon
 Feature: Purchase a TV in Amazon mobile application
   Description: Login to amazon mobile application and search for an item and add to cart and purchase it
 
-   #@TestID_01_Login
-   Scenario: Login into app
-    Given user launches the app
 
-   #@TestID_02_SearchProduct
-   Scenario: Search the product
-    And User clicks on Sign-In Button
-    Given Hamburger Menu is Displayed
+   Background: 
+    Given user launches the app
     Then  User clicks on hamburger Menu
-    And User moves to setting submenu
-    And User select the country as 'Australia'
-    When User logged in using username, password and click signIn Button
-    Then User should see that home page is displayed
-    And User navigates back to Home Page   
-    When User searches for '65-inch TV'
-    And User click on one of the TV's displays except first and Last
-    And User Add the Product to cart
+    And Login to amazon application
     
-    #@TestID_03_CheckoutProduct
-    Scenario: Checkout the product 
-    Given CartPageHeader is Displayed
-    Then  User verify the name, Price and description of the product
+   
+   Scenario: Login to the app and search the product
+   
+    And Validate text Amazon Logo is displayed
+    And User clicks on Amazon button
+    And Validate Search Bar is displayed
+   	And Verify the Suggestion on the Home Page
+   	And Choose the current location
+    And Search for the product "65-inch TV"
+    And Validate "65-inch TV" is displayed
+    And User selects the product from the list
+    And User Verifies the details of the selected Product
+    And User Add's the product to the Cart
+    Then User closes the app
+    
+    
+    Scenario: Verify the Product in the cart
+    
+    And Navigate to the Cart menu
+    And User clicks on Proceed to Buy button
+    Then User closes the app
     
